@@ -1,6 +1,6 @@
 # OpenWRT-CI
 云编译OpenWRT固件
-小米AX3000T专用
+（小米AX3000T专用）
 
 LEDE源码：
 https://github.com/coolsnowwolf/lede （不再自动编译）
