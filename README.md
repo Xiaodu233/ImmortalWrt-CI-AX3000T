@@ -24,7 +24,7 @@ https://github.com/immortalwrt/immortalwrt
 
 普通固件请刷入[https://github.com/VIKINGYFY/UBOOT-CI/releases](https://github.com/VIKINGYFY/UBOOT-CI/releases)内对应型号的Uboot.
 
-Uboot地址为`192.168.1.1`.
+Uboot地址为`192.168.1.1`，更多操作方法详见[https://cmi.hanwckf.top/p/mt798x-uboot-usage/](https://cmi.hanwckf.top/p/mt798x-uboot-usage/)
 
 Uboot分区布局请选择默认.
 
