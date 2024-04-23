@@ -16,7 +16,7 @@ https://github.com/immortalwrt/immortalwrt
 
 默认附带的软件包可以在`Scripts`和`Config`内查看，自带软件包尽量少以减小体积.
 
-安装后可自行安装需要的软件包，推荐通过`opkg install`安装.
+安装后可自行安装需要的软件包，推荐通过软件包`opkg`安装.
 
 推荐安装后更换opkg源为校园网联合镜像站源，操作方法详见[https://help.mirrors.cernet.edu.cn/immortalwrt](https://help.mirrors.cernet.edu.cn/immortalwrt)
 
