@@ -12,11 +12,11 @@ https://github.com/immortalwrt/immortalwrt
 
 固件每周五早上6点自动编译，默认保留1个历史版本. (天天更新真没必要，本来想做个检测上游代码改动来决定是否编译的)
 
-固件信息里的时间为编译开始的时间，方便核对上游源码提交时间。
+固件信息里的时间为编译开始的时间，方便核对上游源码提交时间.
 
 默认附带的软件包可以在`Scripts`和`Config`内查看，安装后可自行安装需要的软件包.
 
-推荐安装后更换opkg源为校园网联合镜像站源，操作方法详见[https://help.mirrors.cernet.edu.cn/immortalwrt](https://github.com/VIKINGYFY/UBOOT-CI/releases).
+推荐安装后更换opkg源为校园网联合镜像站源，操作方法详见[https://help.mirrors.cernet.edu.cn/immortalwrt](https://github.com/VIKINGYFY/UBOOT-CI/releases)
 
 # 固件安装简要说明：
 
