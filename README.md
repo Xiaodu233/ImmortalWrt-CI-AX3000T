@@ -14,7 +14,7 @@ https://github.com/immortalwrt/immortalwrt
 
 固件信息里的时间为编译开始的时间，方便核对上游源码提交时间。
 
-默认附带的软件包可以在`Scripts`和`Config`内查看，也可安装后自行安装需要的软件包.
+默认附带的软件包可以在`Scripts`和`Config`内查看，安装后可自行安装需要的软件包.
 
 推荐安装后更换opkg源为校园网联合镜像站源，操作方法详见[https://help.mirrors.cernet.edu.cn/immortalwrt](https://github.com/VIKINGYFY/UBOOT-CI/releases).
 
