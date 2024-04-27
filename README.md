@@ -13,12 +13,16 @@ https://github.com/immortalwrt/immortalwrt
 
 固件信息里的时间为编译开始的时间，方便核对上游源码提交时间.
 
-固件附带的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/main/Config/General.txt)内查看，自带软件包尽量少以减小体积.
+固件自带的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/main/Config/General.txt)内查看.
 
-安装后可自行安装需要的软件包，推荐通过opkg安装.
+刷入后可自行安装需要的软件包，推荐通过opkg安装.
 
 固件已更换opkg源为校园网联合镜像站源，
 也可以在[https://op.dllkids.xyz/packages/aarch64_cortex-a53/](https://op.dllkids.xyz/packages/aarch64_cortex-a53/)内搜索下载ipk后上传至路由器安装.
+
+<details> <summary>为什么我不推荐固件自带大量软件包</summary>
+为满足不同使用需求，固件附带的软件包极少，只保留路由器基础功能和配置较为复杂的功能，好处是能留出较大空间方便自定义配置.
+</details>
 
 # 固件安装简要说明：
 
