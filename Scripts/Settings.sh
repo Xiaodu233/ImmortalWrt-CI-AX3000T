@@ -29,9 +29,7 @@ elif [[ $WRT_URL == *"immortalwrt"* ]]; then
 fi
 
 #修改opkg软件源为校园网联合镜像站
-sed -e 's,https://downloads.immortalwrt.org,https://mirrors.cernet.edu.cn/immortalwrt,g' \
-    -e 's,https://mirrors.vsean.net/openwrt,https://mirrors.cernet.edu.cn/immortalwrt,g' \
-    -i.bak /etc/opkg/distfeeds.conf
+sed -i 's,https://downloads.immortalwrt.org,https://mirrors.cernet.edu.cn/immortalwrt,g' /etc/opkg/distfeeds.conf
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
