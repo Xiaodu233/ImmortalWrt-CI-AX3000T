@@ -11,7 +11,7 @@ https://github.com/immortalwrt/immortalwrt
 
 固件每周五早上6点自动编译，默认保留1个历史版本.
 
-固件信息里的时间为编译开始的时间，方便核对上游源码提交时间.
+发布信息里的时间为编译开始的时间，方便核对上游源码提交时间.
 
 固件自带的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/main/Config/General.txt)内查看.
 
