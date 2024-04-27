@@ -20,7 +20,7 @@ https://github.com/immortalwrt/immortalwrt
 固件已更换opkg源为校园网联合镜像站源，
 也可以在[https://op.dllkids.xyz/packages/aarch64_cortex-a53/](https://op.dllkids.xyz/packages/aarch64_cortex-a53/)内搜索下载ipk后上传至路由器安装.
 
-<details> <summary><strong>为什么我不推荐固件自带大量软件包</strong></summary>
+<details> <summary><h2>为什么我不推荐固件自带大量软件包</h2></summary>
 为满足不同使用需求，固件附带的软件包极少，只保留路由器基础功能和配置较为复杂的功能，好处是能留出较大空间方便自定义配置.
 </details>
 
