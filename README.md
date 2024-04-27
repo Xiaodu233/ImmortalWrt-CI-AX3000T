@@ -18,8 +18,7 @@ https://github.com/immortalwrt/immortalwrt
 
 安装后可自行安装需要的软件包，推荐通过软件包`opkg`安装.
 
-推荐安装后更换opkg源为校园网联合镜像站源，操作方法详见[https://help.mirrors.cernet.edu.cn/immortalwrt](https://help.mirrors.cernet.edu.cn/immortalwrt)
-
+固件已更换opkg源为校园网联合镜像站源，
 也可以在[https://op.dllkids.xyz/packages/aarch64_cortex-a53/](https://op.dllkids.xyz/packages/aarch64_cortex-a53/)内搜索需要的ipk包下载后上传至路由器安装.
 
 # 固件安装简要说明：
