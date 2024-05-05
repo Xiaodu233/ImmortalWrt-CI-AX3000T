@@ -51,6 +51,14 @@ jobs:
     steps:
       - name: Checkout Projects
         uses: actions/checkout@main
+              
+      - name: Install jq              
+        uses: dcarbone/install-jq-action@v2.1.0
+        with:
+          version:
+            required: false
+            description: "Version of jq to install"
+            default: "1.7.1"
 
       - name: Update sing-box version
         run: ./Scripts/Upsing.sh
