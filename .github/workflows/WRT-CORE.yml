@@ -52,6 +52,9 @@ jobs:
       - name: Checkout Projects
         uses: actions/checkout@main
 
+      - name: Update sing-box version
+        run: ./Scripts/Upsing.sh
+
       - name: Free Disk Space
         uses: endersonmenezes/free-disk-space@main
         with:
