@@ -8,4 +8,4 @@ singsha=$(sha256sum ./$singver | cut -b -64)
 
 rm ./$singver
 
-sed -i "/^UPDATE_VERSION\s/c\UPDATE_VERSION \"sing-box\" \"$singver\" \"$singsha\"" ./Scripts/Packages.sh
+sed -i "/^UPDATE_VERSION\s/c\UPDATE_VERSION \"sing-box\" \"$singver\" \"$singsha\"" .$GITHUB_WORKSPACE/Scripts/Packages.sh
