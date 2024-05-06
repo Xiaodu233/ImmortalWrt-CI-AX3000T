@@ -7,13 +7,35 @@ on:
     - cron: 0 22 * * 4
   #手动编译
   workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: false
+        description: 'Version of jq to install'
+        default: '1.7.1'
 
 #CI权限
 permissions: write-all
 
 #CI任务
 jobs:
+  Upsing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+        
+      - name: Install jq              
+        uses: dcarbone/install-jq-action@v2.1.0
+        with:
+          version: '${{ inputs.version }}'
+
+      - name: Update sing-box version
+        run: ./Scripts/Upsing.sh
+
+
   wrt_config:
+    needs: Upsing
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
