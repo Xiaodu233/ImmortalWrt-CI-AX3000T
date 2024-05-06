@@ -29,6 +29,11 @@ jobs:
         uses: dcarbone/install-jq-action@v2.1.0
         with:
           version: '${{ inputs.version }}'
+          
+      - name: 'Check jq'
+        run: |
+          which jq
+          jq --version
 
       - name: Update sing-box version
         run: |
