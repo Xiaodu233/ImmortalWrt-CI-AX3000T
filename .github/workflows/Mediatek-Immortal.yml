@@ -31,7 +31,9 @@ jobs:
           version: '${{ inputs.version }}'
 
       - name: Update sing-box version
-        run: ./Scripts/Upsing.sh
+        run: |
+          chmod +x ./Scripts/Upsing.sh
+          ./Scripts/Upsing.sh
 
       - name: Commit changes
         run: |
