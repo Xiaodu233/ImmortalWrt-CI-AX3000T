@@ -8,6 +8,6 @@ singsha=$(sha256sum ./$singver)
 
 rm ./$singver
 
-fullver=$(UPDATE_VERSION "sing-box" "$singver" "$singsha")
+fullver="UPDATE_VERSION "sing-box" "$singver" "$singsha""
 
 sed -i '/^UPDATE_VERSION "sing-box" */c'$fullver'' ./Scripts/Packages.sh
