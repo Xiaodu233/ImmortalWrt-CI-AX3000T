@@ -21,8 +21,6 @@ jobs:
 
       - name: Update sing-box version
         run: |
-          git clone --depth 1 https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T.git ./Upsing/
-          cd ./Upsing/
           chmod +x ./Scripts/Upsing.sh
           ./Scripts/Upsing.sh
 
