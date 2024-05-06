@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Projects
         uses: actions/checkout@main
         with:
-          sparse-checkout: .
+          fetch-depth: 1
 
       - name: Update sing-box version
         run: |
