@@ -4,10 +4,10 @@ singver=$(curl "https://api.github.com/repos/SagerNet/sing-box/tags" | jq -r '.[
 
 wget -P ./ https://codeload.github.com/SagerNet/sing-box/tar.gz/$singver
 
-singsha=$(sha256sum ./$singver)
+singsha=$(sha256sum ./$singver | cut -b -64)
 
 rm ./$singver
 
-fullver="UPDATE_VERSION "sing-box" "$singver" "$singsha""
+fullver="UPDATE_VERSION \"sing-box\" \"$singver\" \"$singsha\""
 
-sed -i '/^UPDATE_VERSION "sing-box" */c'$fullver'' ./Scripts/Packages.sh
+sed -i '/^UPDATE_VERSION\s\"sing-box\"/c'$fullver'' ./Scripts/Packages.sh
