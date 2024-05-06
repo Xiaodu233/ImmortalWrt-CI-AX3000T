@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout Projects
         uses: actions/checkout@main
+        with:
+          sparse-checkout: .
 
       - name: Update sing-box version
         run: |
