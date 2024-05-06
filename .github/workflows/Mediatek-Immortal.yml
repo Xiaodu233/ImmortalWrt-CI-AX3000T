@@ -7,12 +7,6 @@ on:
     - cron: 0 22 * * 4
   #手动编译
   workflow_dispatch:
-    inputs:
-      version:
-        type: string
-        required: false
-        description: 'Version of jq to install'
-        default: '1.7.1'
 
 #CI权限
 permissions: write-all
@@ -24,18 +18,6 @@ jobs:
     steps:
       - name: Checkout Projects
         uses: actions/checkout@main
-        
-      - name: Install jq              
-        uses: dcarbone/install-jq-action@v2.1.0
-        with:
-          version: '${{ inputs.version }}'
-          
-      - name: 'Check jq'
-        run: |
-          which jq
-          jq --version
-          which curl
-          curl -h
 
       - name: Update sing-box version
         run: |
