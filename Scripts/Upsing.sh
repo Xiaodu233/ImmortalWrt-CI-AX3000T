@@ -8,4 +8,4 @@ singsha=$(sha256sum ./$singver | cut -b -64)
 
 rm ./$singver
 
-sed -i "/^UPDATE_VERSION\s/c\UPDATE_VERSION \"sing-box\" \"$singver\" \"$singsha\"" ./home/runner/work/ImmortalWrt-CI-AX3000T/ImmortalWrt-CI-AX3000T/Scripts/Packages.sh
+sed -i "/^UPDATE_VERSION\s/c\UPDATE_VERSION \"sing-box\" \"$singver\" \"$singsha\"" ./Scripts/Packages.sh
