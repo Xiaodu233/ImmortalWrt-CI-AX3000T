@@ -8,7 +8,6 @@ on:
   #手动编译
   workflow_dispatch:
 
-
 #CI权限
 permissions: write-all
 
