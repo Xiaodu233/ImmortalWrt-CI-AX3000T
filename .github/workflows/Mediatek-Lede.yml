@@ -2,11 +2,11 @@
 name: Mediatek-Lede
 
 on:
-  #自动编译：每天早上4点
-  #schedule:
-    #- cron: 0 20 * * *
-  #手动编译
-  workflow_dispatch:
+  #在前置准备完成后运行
+  workflow_run:
+    workflows: ["#Immortal#"]
+    types:
+      - completed
 
 #CI权限
 permissions: write-all
