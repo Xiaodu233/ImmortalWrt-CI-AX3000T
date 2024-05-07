@@ -2,9 +2,7 @@
 name: Mediatek-Immortal
 
 on:
-  #自动编译：每周五早上6点
-  schedule:
-    - cron: 0 22 * * 4
+  #在前置准备完成后运行
   workflow_run:
     workflows: ["Immortal"]
     types:
