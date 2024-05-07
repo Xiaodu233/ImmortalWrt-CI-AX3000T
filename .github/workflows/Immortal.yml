@@ -1,4 +1,17 @@
-Upsing:
+#CI项目名
+name: Immortal
+
+on:
+  #自动编译：每周五早上6点
+  schedule:
+    - cron: 0 22 * * 4
+
+#CI权限
+permissions: write-all
+
+#CI任务
+jobs:
+  Upsing:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
@@ -26,5 +39,4 @@ Upsing:
         if: ${{ steps.commit-changes.outputs.singupdated == 'true' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          
+          branch: ${{ github.ref }}       
