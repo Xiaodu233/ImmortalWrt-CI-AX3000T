@@ -5,6 +5,9 @@ on:
   #自动编译：每周五早上6点
   schedule:
     - cron: 0 22 * * 4
+  #手动编译
+  workflow_dispatch:
+
 
 #CI权限
 permissions: write-all
