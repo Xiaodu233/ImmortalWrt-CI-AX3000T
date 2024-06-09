@@ -1,6 +1,5 @@
 ## OpenWRT-CI
 云编译OpenWRT固件（小米AX3000T专用）
-怎么根本没人看这个项目...呜呜
 
 IMMORTALWRT源码：
 https://github.com/immortalwrt/immortalwrt
@@ -15,7 +14,7 @@ https://github.com/immortalwrt/immortalwrt
 
 刷入后可自行安装需要的软件包，推荐通过opkg安装.
 
-固件已更换opkg源为校园网联合镜像站源，
+固件已更换opkg源为校园网联合镜像站源，好吧验证过并不行，太菜了...
 也可以在[https://op.dllkids.xyz/packages/aarch64_cortex-a53/](https://op.dllkids.xyz/packages/aarch64_cortex-a53/)内搜索下载ipk后上传至路由器安装.
 
 <details> <summary><h3>为什么我不推荐固件自带大量软件包</h3></summary>
