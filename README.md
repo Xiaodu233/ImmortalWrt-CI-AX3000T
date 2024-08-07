@@ -1,7 +1,7 @@
 ## OpenWRT-CI
 云编译OpenWRT固件（小米AX3000T专用）
 
-IMMORTALWRT源码：
+ImmortalWrt源码：
 https://github.com/immortalwrt/immortalwrt
 
 ## 固件简要说明：
