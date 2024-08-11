@@ -1,5 +1,5 @@
 #CI项目名
-name: OWRT-Mediatek
+name: OWRT-Ramips
 
 on:
 #自动编译：每周五早上6点
@@ -30,10 +30,10 @@ jobs:
       #max-parallel: 3
       matrix:
         include:
-          - TARGET: Mediatek
+          - TARGET: Ramips
             SOURCE: immortalwrt/ImmortalWrt
             BRANCH: master
-          - TARGET: Mediatek
+          - TARGET: Ramips
             SOURCE: immortalwrt/ImmortalWrt
             BRANCH: openwrt-23.05
 
@@ -49,7 +49,7 @@ jobs:
       #默认WIFI名
       WRT_WIFI: OWRT
       #默认地址
-      WRT_IP: 192.168.10.1
+      WRT_IP: 192.168.2.1
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #源码链接
