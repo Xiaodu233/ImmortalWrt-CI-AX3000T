@@ -165,7 +165,6 @@ jobs:
           cd ./wrt/package/
 
           $GITHUB_WORKSPACE/Scripts/Packages.sh
-          $GITHUB_WORKSPACE/Scripts/Handles.sh
 
       - name: Custom Settings
         run: |
@@ -178,6 +177,9 @@ jobs:
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           make defconfig
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
