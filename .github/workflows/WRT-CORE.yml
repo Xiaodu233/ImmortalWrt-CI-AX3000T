@@ -178,9 +178,6 @@ jobs:
 
           make defconfig
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Download Packages
         if: env.WRT_TEST != 'true'
         run: |
