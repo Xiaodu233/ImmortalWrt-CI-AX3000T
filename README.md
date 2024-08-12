@@ -1,5 +1,5 @@
 ## ImmortalWrt-CI
-云编译ImmortalWrt固件（小米AX3000T专用）
+云编译ImmortalWrt固件（小米AX3000T 专用）
 
 ImmortalWrt源码：
 https://github.com/immortalwrt/immortalwrt
