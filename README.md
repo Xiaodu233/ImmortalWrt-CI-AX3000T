@@ -1,5 +1,5 @@
 ## ImmortalWrt-CI
-云编译ImmortalWrt固件（测试为R4AG构建）
+云编译ImmortalWrt固件（测试为 R4AG 构建）
 
 ImmortalWrt源码：
 https://github.com/immortalwrt/immortalwrt
@@ -14,7 +14,7 @@ https://github.com/immortalwrt/immortalwrt
 
 刷入后可自行安装需要的软件包，推荐通过opkg安装.
 
-固件已更换opkg源为校园网联合镜像站源，好吧验证过并不行，太菜了...
+固件已更换opkg源为校园网联合镜像站源.
 
 也可以在[https://op.dllkids.xyz/packages/aarch64_cortex-a53/](https://op.dllkids.xyz/packages/aarch64_cortex-a53/)内搜索下载ipk后上传至路由器安装.
 
@@ -22,7 +22,7 @@ https://github.com/immortalwrt/immortalwrt
 为满足不同使用需求，固件附带的软件包极少，只保留路由器基础功能和配置较为复杂的功能，好处是能留出较大空间方便自定义配置.
 </details>
 
-## 固件安装简要说明：
+## 固件安装简要说明：（R4AG 待更新）
 
 ### 只针对首次刷入（包含官方和其他版本固件）
 
