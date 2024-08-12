@@ -30,8 +30,8 @@ else
 fi
 
 #修改opkg软件源为校园网联合镜像站
-LAST_LINE=$(awk '/exit 0/{print NR}' ./package/emortal/default-settings/files/99-default-settings)
-sed -i 'N;'"${LAST_LINE}"'i\sed -i 's,https://downloads.immortalwrt.org,https://mirrors.cernet.edu.cn/immortalwrt,g' /etc/opkg/distfeeds.conf' ./package/emortal/default-settings/files/99-default-settings
+LAST_LINE=$(awk '/exit 0/{print NR}' $(find ./package/emortal/default-settings/files/ -type f -name "99-default-settings"))
+sed -i 'N;'"${LAST_LINE}"'i\sed -i '\"s,https://downloads.immortalwrt.org,https://mirrors.cernet.edu.cn/immortalwrt,g\"' "/etc/opkg/distfeeds.conf"' $(find ./package/emortal/default-settings/files/ -type f -name "99-default-settings")
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
