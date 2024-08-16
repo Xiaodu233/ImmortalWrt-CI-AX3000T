@@ -1,0 +1,28 @@
+#CI项目名
+name: OWRT-Ramips
+
+on:
+#自动编译：每周五早上6点
+  schedule:
+    - cron: 0 22 * * 4
+  #手动编译
+  workflow_dispatch:
+    inputs:
+      PACKAGE:
+        description: '手动调整插件包，仅限一个。'
+        required: false
+        type: string
+      TEST:
+        description: '仅输出配置文件，不编译固件。'
+        default: 'false'
+        required: false
+        type: boolean
+
+#CI权限
+permissions: write-all
+
+#CI任务
+jobs:
+  call_test_yml:
+    #调用test分支运行OWRT-Ramips.yml
+    uses: ./.github/workflows/OWRT-Ramips.yml
