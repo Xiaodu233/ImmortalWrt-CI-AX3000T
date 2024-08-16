@@ -17,6 +17,7 @@ on:
         default: 'false'
         required: false
         type: boolean
+  push:
 
 #CI权限
 permissions: write-all
