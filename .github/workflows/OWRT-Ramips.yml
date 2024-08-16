@@ -2,6 +2,7 @@
 name: OWRT-Ramips
 
 on:
+  workflow_call:
 #自动编译：每周五早上6点
   schedule:
     - cron: 0 22 * * 4
