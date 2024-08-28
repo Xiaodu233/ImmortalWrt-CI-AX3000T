@@ -30,9 +30,9 @@ jobs:
       #max-parallel: 3
       matrix:
         include:
-          - TARGET: Mediatek
-            SOURCE: immortalwrt/ImmortalWrt
-            BRANCH: master
+          #- TARGET: Mediatek
+            #SOURCE: immortalwrt/ImmortalWrt
+            #BRANCH: master
           - TARGET: Mediatek
             SOURCE: immortalwrt/ImmortalWrt
             BRANCH: openwrt-23.05
