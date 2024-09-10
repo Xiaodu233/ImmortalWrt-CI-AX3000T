@@ -56,7 +56,7 @@ jobs:
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       #源码分支
-      WRT_BRANCH: ${{matrix.BRANCH || 'main'}}
+      WRT_BRANCH: ${{matrix.BRANCH || 'master'}}
       #源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
       #插件调整
