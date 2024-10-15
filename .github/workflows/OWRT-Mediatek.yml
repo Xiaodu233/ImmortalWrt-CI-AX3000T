@@ -32,7 +32,7 @@ jobs:
       #max-parallel: 3
       matrix:
         include:
-          - TARGET: Mediatek
+          - TARGET: [Mediatek_Proxy, Mediatek_noProxy]
             SOURCE: VIKINGYFY/ImmortalWrt
 
     #调用公用编译核心WRT-CORE.yml
