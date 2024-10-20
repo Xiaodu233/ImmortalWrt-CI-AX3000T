@@ -149,6 +149,8 @@ jobs:
         run: |
           cd ./wrt/
 
+          curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+          make menuconfig
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
