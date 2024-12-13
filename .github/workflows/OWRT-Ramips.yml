@@ -48,8 +48,10 @@ jobs:
       WRT_THEME: argon
       #默认主机名
       WRT_NAME: OWRT
-      #默认WIFI名
-      WRT_WIFI: OWRT
+      #默认WIFI名称
+      WRT_SSID: OWRT
+      #默认WIFI密码
+      WRT_WORD: 12345678
       #默认地址
       WRT_IP: 192.168.2.1
       #默认密码，仅作提示，修改无用
@@ -57,7 +59,7 @@ jobs:
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       #源码分支
-      WRT_BRANCH: ${{matrix.BRANCH || 'master'}}
+      WRT_BRANCH: ${{matrix.BRANCH}}
       #源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
       #插件调整
