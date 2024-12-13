@@ -13,7 +13,10 @@ on:
       WRT_NAME:
         required: true
         type: string
-      WRT_WIFI:
+      WRT_SSID:
+        required: true
+        type: string
+      WRT_WORD:
         required: true
         type: string
       WRT_IP:
@@ -228,5 +231,5 @@ jobs:
             分支：${{env.WRT_BRANCH}}
             地址：${{env.WRT_IP}}
             密码：${{env.WRT_PW}}
-            WIFI名：${{env.WRT_WIFI}}
-            WIFI密码：12345678
+            WIFI名称：${{env.WRT_SSID}}
+            WIFI密码：${{env.WRT_WORD}}
