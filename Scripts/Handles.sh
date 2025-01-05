@@ -48,3 +48,10 @@ if [ -f "$TS_FILE" ]; then
 
 	cd $PKG_PATH && echo "tailscale has been fixed!"
 fi
+
+#修复argon主题进度条颜色不同步
+LESS_FILE="./luci-theme-argon/less/cascade.less"
+if [ -f "$LESS_FILE" ]; then
+	sed -i 's/(--bar-bg)/(--primary)/g' $LESS_FILE
+	cd $PKG_PATH && echo "theme-argon has been fixed!"
+fi
