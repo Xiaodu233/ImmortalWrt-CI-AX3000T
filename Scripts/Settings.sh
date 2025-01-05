@@ -49,5 +49,5 @@ fi
 #编译器优化
 if [[ $WRT_TARGET != *"X86"* ]]; then
 	echo "CONFIG_TARGET_OPTIONS=y" >> ./.config
-	echo "CONFIG_TARGET_OPTIMIZATION=\"-O2 -pipe -march=1004kc+crypto+crc -mcpu=1004kc+crypto+crc -mtune=mipsel_24kc\"" >> ./.config
+	echo "CONFIG_TARGET_OPTIMIZATION=\"-O2 -pipe -march=24kc+crypto+crc -mcpu=24kc+crypto+crc -mtune=mipsel_24kc\"" >> ./.config
 fi
