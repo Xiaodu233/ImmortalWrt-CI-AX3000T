@@ -8,15 +8,20 @@ UPDATE_PACKAGE() {
 	local PKG_SPECIAL=$4
 	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
 
-	find ./ ../feeds/luci/ ../feeds/packages/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -exec rm -rf {} +
+	IFS=' ' read -ra KEYWORDS <<< "$PKG_NAMES"
+	for KEYWORD in "${KEYWORDS[@]}"; do
+		find ./ ../feeds/luci/ ../feeds/packages/ -maxdepth 3 -type d -iname "*$KEYWORD*" -exec rm -rf {} +
+	done
 
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
 	if [[ $PKG_SPECIAL == "pkg" ]]; then
-		find ./$REPO_NAME/*/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune -exec cp -rf {} ./ \;
-		rm -rf ./$REPO_NAME/
+		for KEYWORD in "${KEYWORDS[@]}"; do
+			find ./$REPO_NAME/*/ -maxdepth 3 -type d -iname "*$KEYWORD*" -prune -exec cp -rf {} ./ \;
+		done
+		rm -rf ./$REPO_NAME
 	elif [[ $PKG_SPECIAL == "name" ]]; then
-		mv -f $REPO_NAME $PKG_NAME
+		mv -f $REPO_NAME ${KEYWORDS[0]}
 	fi
 }
 
