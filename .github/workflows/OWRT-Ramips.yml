@@ -1,6 +1,7 @@
 #CI项目名
 name: OWRT-Ramips
 
+#CI计划
 on:
 #自动编译：每周五早上6点
   #schedule:
@@ -9,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       PACKAGE:
-        description: '手动调整插件包，仅限一个。'
+        description: '手动调整插件包，多个请用\n符号隔开。'
         required: false
         type: string
       TEST:
