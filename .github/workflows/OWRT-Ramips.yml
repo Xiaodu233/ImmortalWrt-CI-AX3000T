@@ -1,6 +1,7 @@
 #CI项目名
 name: OWRT-Ramips
 
+#CI计划
 on:
   #自动编译：当Auto-Clean运行完成后
   workflow_run:
@@ -26,24 +27,20 @@ permissions: write-all
 #CI任务
 jobs:
   config:
-    name: ${{matrix.TARGET}}
+    name: ${{matrix.CONFIG}}
     strategy:
       fail-fast: false
       #max-parallel: 3
       matrix:
-        include:
-          #- TARGET: Ramips
-            #SOURCE: immortalwrt/ImmortalWrt
-            #BRANCH: master
-          - TARGET: Ramips
-            SOURCE: immortalwrt/ImmortalWrt
-            BRANCH: openwrt-24.10
+        CONFIG: [Ramips]
+        SOURCE: [immortalwrt/immortalwrt,VIKINGYFY/immortalwrt]
+        BRANCH: [openwrt-24.10,owrt]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
-      #编译平台
-      WRT_TARGET: ${{matrix.TARGET}}
+      #编译配置
+      WRT_CONFIG: ${{matrix.CONFIG}}
       #默认主题
       WRT_THEME: argon
       #默认主机名
