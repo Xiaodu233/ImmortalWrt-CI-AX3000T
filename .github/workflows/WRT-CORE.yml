@@ -229,6 +229,7 @@ jobs:
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
             内核版本：${{env.WRT_KVER}}
+            提交版本：${{env.WRT_HASH}}
             地址：${{env.WRT_IP}}
             密码：${{env.WRT_PW}}
             WIFI名称：${{env.WRT_SSID}}
