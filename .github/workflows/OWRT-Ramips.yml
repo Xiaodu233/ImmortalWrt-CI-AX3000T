@@ -32,9 +32,13 @@ jobs:
       fail-fast: false
       #max-parallel: 3
       matrix:
-        CONFIG: [Ramips]
-        SOURCE: [immortalwrt/immortalwrt,VIKINGYFY/immortalwrt]
-        BRANCH: [openwrt-24.10,owrt]
+        include:
+          - CONFIG: Ramips
+            SOURCE: immortalwrt/immortalwrt
+            BRANCH: openwrt-24.10
+          - CONFIG: Ramips
+            SOURCE: VIKINGYFY/immortalwrt
+            BRANCH: owrt
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
