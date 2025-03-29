@@ -178,7 +178,7 @@ jobs:
         run: |
           cd ./wrt/
 
-          make -j$(nproc) || make -j1 V=s
+          make -j$(nproc) || make -j$(nproc) V=s
 
       - name: Machine Information
         run: |
@@ -237,4 +237,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.WRT_CONFIG}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
+          body_path: ./wrt/release.txt
           files: ./wrt/upload/*.*
