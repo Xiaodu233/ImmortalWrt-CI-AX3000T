@@ -1,4 +1,3 @@
-#MI-ROUTER-AX3000T
 CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_filogic=y
 #设备列表
