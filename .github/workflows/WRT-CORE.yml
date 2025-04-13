@@ -223,15 +223,15 @@ jobs:
           tag_name: ${{env.WRT_CONFIG}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
           body: |
-            源码：$WRT_REPO
-            分支：$WRT_BRANCH
-            提交：$WRT_HASH
-            内核：$WRT_KVER
+            源码：${{env.WRT_REPO}}
+            分支：${{env.WRT_BRANCH}}
+            提交：${{env.WRT_HASH}}
+            内核：${{env.WRT_KVER}}
 
-            地址：$WRT_IP
-            密码：$WRT_PW
+            地址：${{env.WRT_IP}}
+            密码：${{env.WRT_PW}}
 
-            WIFI名称：$WRT_SSID
-            WIFI密码：$WRT_WORD
+            WIFI名称：${{env.WRT_SSID}}
+            WIFI密码：${{env.WRT_WORD}}
 
             插件列表：${{env.WRT_LIST}}
