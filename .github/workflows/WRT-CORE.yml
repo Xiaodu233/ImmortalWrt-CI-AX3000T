@@ -216,26 +216,21 @@ jobs:
             make clean -j$(nproc)
           fi
 
-      - name: Release Information
-        run: |
-          cd ./wrt/ && touch ./release.txt
-
-          echo -e "源码：$WRT_REPO" >> ./release.txt
-          echo -e "分支：$WRT_BRANCH" >> ./release.txt
-          echo -e "提交：$WRT_HASH" >> ./release.txt
-          echo -e "内核：$WRT_KVER" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "地址：$WRT_IP" >> ./release.txt
-          echo -e "密码：$WRT_PW" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "WIFI名称：$WRT_SSID" >> ./release.txt
-          echo -e "WIFI密码：$WRT_WORD" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "插件列表：\n${WRT_LIST// /$'\n'}" >> ./release.txt
-
       - name: Release Firmware
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.WRT_CONFIG}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
-          body_path: ./wrt/release.txt
           files: ./wrt/upload/*.*
+          body: |
+            源码：$WRT_REPO
+            分支：$WRT_BRANCH
+            提交：$WRT_HASH
+            内核：$WRT_KVER
+
+            地址：$WRT_IP
+            密码：$WRT_PW
+
+            WIFI名称：$WRT_SSID
+            WIFI密码：$WRT_WORD
+
+            插件列表：${{env.WRT_LIST}}
