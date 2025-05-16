@@ -1,9 +1,14 @@
 name: Auto-Clean
 
 on:
+  #自动清理：当Cache-Clean运行完成后
+  workflow_run:
+    workflows: ["Cache-Clean"]
+    types:
+      - completed
   #自动清理：每周五早上6点
-  schedule:
-    - cron: 0 22 * * 4
+  #schedule:
+    #- cron: 0 22 * * 4
   #手动清理
   workflow_dispatch:
 
