@@ -12,7 +12,6 @@ https://github.com/immortalwrt/immortalwrt
 
 固件预置的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/main/Config/General.txt)内查看.
 
-
 固件预置的软件包较少，刷入后可自行安装需要的软件包，或者选择fork项目自行编辑预置软件包.
 
 未更换镜像源，本人太菜~~还没玩明白~~.
