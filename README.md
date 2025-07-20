@@ -1,8 +1,17 @@
 ## ImmortalWrt-CI
 云编译ImmortalWrt固件（小米4A千兆版/R4AG 专用）
 
-ImmortalWrt源码：
-https://github.com/immortalwrt/immortalwrt
+此分支使用源码：
+
+[https://github.com/VIKINGYFY/immortalwrt/tree/owrt](https://github.com/VIKINGYFY/immortalwrt/tree/owrt)
+
+[https://github.com/immortalwrt/immortalwrt/tree/openwrt-24.10](https://github.com/immortalwrt/immortalwrt/tree/openwrt-24.10)
+
+## 发布版本说明：
+
+区别为两个不同的源码，注意查看发布说明，自行选择下载，不建议不同源码间升级。
+
+*两个源码有啥区别？* ~~我也不知道~~
 
 ## 固件简要说明：
 
