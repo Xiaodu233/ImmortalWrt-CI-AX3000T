@@ -1,14 +1,17 @@
 ## ImmortalWrt-CI
 云编译ImmortalWrt固件（小米AX3000T 专用）
 
-ImmortalWrt源码：
-https://github.com/immortalwrt/immortalwrt
+此分支使用源码：[https://github.com/VIKINGYFY/immortalwrt/tree/owrt](https://github.com/VIKINGYFY/immortalwrt/tree/owrt)
+
+## 发布版本说明：
+
+区别仅为有无`homeproxy`，已标注区分，可按需下载。
 
 ## 固件简要说明：
 
 固件每周五早上6点自动编译，保留一个历史版本.
 
-发布信息里的时间为编译开始的时间，方便核对上游源码提交时间.
+固件信息里的时间为编译开始的时间，方便核对上游源码提交时间.
 
 固件预置的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/main/Config/General.txt)内查看.
 
