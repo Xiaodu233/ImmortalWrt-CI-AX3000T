@@ -1,5 +1,5 @@
 ## ImmortalWrt-CI
-云编译ImmortalWrt固件（测试为 R4AG 构建）
+云编译ImmortalWrt固件（小米4A千兆版/R4AG 专用）
 
 ImmortalWrt源码：
 https://github.com/immortalwrt/immortalwrt
@@ -12,33 +12,21 @@ https://github.com/immortalwrt/immortalwrt
 
 固件自带的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/test/Config/General.txt)内查看.
 
-刷入后可自行安装需要的软件包，推荐通过opkg安装.
+固件预置的软件包较少，刷入后可自行安装需要的软件包，或者选择fork项目自行编辑预置软件包.
 
-固件已更换opkg源为上海交通大学镜像站源.
+未更换镜像源，本人太菜~~还没玩明白~~.
 
-也可以在[https://op.dllkids.xyz/packages/aarch64_cortex-a53/](https://op.dllkids.xyz/packages/aarch64_cortex-a53/)内搜索下载ipk后上传至路由器安装.
+## 固件安装简要说明：（待更新...）
 
-<details> <summary><h3>为什么我不推荐固件自带大量软件包</h3></summary>
-为满足不同使用需求，固件附带的软件包极少，只保留路由器基础功能和配置较为复杂的功能，好处是能留出较大空间方便自定义配置.
-</details>
+### 只针对首次刷入
 
-## 固件安装简要说明：（R4AG 待更新）
+默认您已经完成前期工作，详细教程请自行查询.
 
-### 只针对首次刷入（包含官方和其他版本固件）
+进入Breed，上传，确认，等待路由器变砖((
 
-含`ubootmod`字样的固件需要先刷入含同字样的Uboot.
+## 使用建议和参考：
 
-普通固件请刷入[https://github.com/VIKINGYFY/UBOOT-CI/releases](https://github.com/VIKINGYFY/UBOOT-CI/releases)内对应型号的Uboot.
-
-Uboot地址为`192.168.1.1`，分区布局请选择默认.
-
-上传，确认，等待路由器变砖((
-
-Uboot更多操作方法详见[https://cmi.hanwckf.top/p/mt798x-uboot-usage/](https://cmi.hanwckf.top/p/mt798x-uboot-usage/)
-
-## 固件使用建议和心得：
-
-（待补充...）
+（大概不会补充...）
 
 ## 目录简要说明：
 
