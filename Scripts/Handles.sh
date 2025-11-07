@@ -5,7 +5,7 @@ PKG_PATH="$GITHUB_WORKSPACE/wrt/package/"
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
 	echo " "
- 
+
 	HP_RULE="surge"
 	HP_PATH="homeproxy/root/etc/homeproxy"
 
@@ -27,12 +27,12 @@ fi
 #修改argon主题字体和颜色
 if [ -d *"luci-theme-argon"* ]; then
 	echo " "
- 
+
 	cd ./luci-theme-argon/
 
 	sed -i "/font-weight:/ { /important/! { /\/\*/! s/:.*/: var(--font-weight);/ } }" $(find ./luci-theme-argon -type f -iname "*.css")
 	sed -i "s/primary '.*'/primary '#31a1a1'/; s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" ./luci-app-argon-config/root/etc/config/argon
- 
+
 	cd $PKG_PATH && echo "theme-argon has been fixed!"
 fi
 
@@ -40,13 +40,13 @@ fi
 TS_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/tailscale/Makefile")
 if [ -f "$TS_FILE" ]; then
 	echo " "
- 
+
 	sed -i '/\/files/d' $TS_FILE
 
 	cd $PKG_PATH && echo "tailscale has been fixed!"
 fi
 
-#修复Rust编译失败Add commentMore actions
+#修复Rust编译失败
 RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
 if [ -f "$RUST_FILE" ]; then
 	echo " "
