@@ -5,8 +5,8 @@ CONFIG_PACKAGE_luci-app-argon-config=y
 #删除插件
 CONFIG_PACKAGE_luci-app-wol=n
 #个人需求插件
-CONFIG_PACKAGE_python3=y
-CONFIG_PACKAGE_python3-pip=y
+# CONFIG_PACKAGE_python3=y
+# CONFIG_PACKAGE_python3-pip=y
 CONFIG_PACKAGE_luci-app-frpc=y
 
 #参数调整
