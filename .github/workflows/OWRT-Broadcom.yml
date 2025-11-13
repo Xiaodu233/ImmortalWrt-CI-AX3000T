@@ -25,5 +25,5 @@ permissions: write-all
 #CI任务
 jobs:
   call_test_yml:
-    #调用test分支运行OWRT-Ramips.yml
+    #调用pai分支运行OWRT-Broadcom.yml
     uses: Xiaodu233/ImmortalWrt-CI-AX3000T/.github/workflows/OWRT-Broadcom.yml@pai
