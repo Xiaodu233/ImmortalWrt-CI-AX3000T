@@ -5,13 +5,13 @@
 
 [https://github.com/VIKINGYFY/immortalwrt/tree/owrt](https://github.com/VIKINGYFY/immortalwrt/tree/owrt)
 
-[https://github.com/immortalwrt/immortalwrt/tree/openwrt-24.10](https://github.com/immortalwrt/immortalwrt/tree/openwrt-24.10)
-
 ## 发布版本说明：
 
-区别为两个不同的源码，注意查看发布说明，自行选择下载，不建议不同源码间升级。
+~~区别为两个不同的源码，注意查看发布说明，自行选择下载，不建议不同源码间升级。~~
 
-*两个源码有啥区别？* ~~我也不知道~~
+~~*两个源码有啥区别？* 我也不知道~~
+
+已改为只使用一种源码，固件内无`homeproxy`, `tailscale`
 
 ## 固件简要说明：
 
