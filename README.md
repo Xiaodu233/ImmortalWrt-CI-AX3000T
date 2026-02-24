@@ -3,35 +3,33 @@
 
 此分支使用源码：
 
-[https://github.com/VIKINGYFY/immortalwrt/tree/owrt](https://github.com/VIKINGYFY/immortalwrt/tree/owrt)
+[VIKINGYFY/immortalwrt-owrt](https://github.com/VIKINGYFY/immortalwrt/tree/owrt)
 
 ## 发布版本说明：
 
-~~区别为两个不同的源码，注意查看发布说明，自行选择下载，不建议不同源码间升级。~~
-
-~~*两个源码有啥区别？* 我也不知道~~
-
-已改为只使用一种源码，固件内无`homeproxy`, `tailscale`
+考虑到性能有限，固件内无`tailscale`，`homeproxy`。
 
 ## 固件简要说明：
 
-固件每周五早上6点自动编译，保留一个历史版本.
+~~固件每周五早上6点自动编译~~，保留一个历史版本。
 
-发布信息里的时间为编译开始的时间，方便核对上游源码提交时间.
+除主分支外暂无自动编译，~~太懒还没研究出来。~~
 
-固件自带的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/test/Config/General.txt)内查看.
+发布信息里的时间为编译开始的时间，方便核对上游源码提交时间。
 
-固件预置的软件包较少，刷入后可自行安装需要的软件包，或者选择fork项目自行编辑预置软件包.
+固件自带软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/r4ag/Config/General.txt)内查看。
 
-未更换镜像源，本人太菜~~还没玩明白~~.
+自带软件包较少，推荐Fork此项目按需编辑配置，也可在刷入后安装软件包（不推荐）。
 
-## 固件安装简要说明：（待更新...）
+未更换镜像源，~~太菜还没折腾明白。~~
 
-### 只针对首次刷入
+## 安装简要说明：
 
-默认您已经完成前期工作，详细教程请自行查询.
+默认您已经完成前期工作，详细教程请自行查询。
 
-进入Breed，上传，确认，等待路由器变砖((
+下载Breed：[breed.hackpascal.net](https://breed.hackpascal.net)
+
+进入Breed，闪存布局请选择`公版`，上传，确认，等待路由器变砖((
 
 ## 使用建议和参考：
 
