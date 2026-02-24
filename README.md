@@ -27,7 +27,7 @@
 
 默认您已经完成前期工作，详细教程请自行查询。
 
-推荐Uboot：
+推荐U-Boot：
 
 [Yuzhii0718/bl-mt798x-dhcpd](https://github.com/Yuzhii0718/bl-mt798x-dhcpd/releases)（修改版功能更多）
 
@@ -35,7 +35,7 @@
 
 请根据硬件版本（新版为AN8855交换机芯片）选择，下载并进行刷入。
 
-进入Uboot，分区布局请选择`default`，上传，确认，等待路由器变砖((
+进入U-Boot，分区布局请选择`default`，上传，确认，等待路由器变砖((
 
 ## 使用建议和参考：
 
