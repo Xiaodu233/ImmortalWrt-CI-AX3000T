@@ -29,7 +29,13 @@
 
 下载Breed：[breed.hackpascal.net](https://breed.hackpascal.net)
 
-进入Breed，闪存布局请选择`公版`，上传，确认，等待路由器变砖((
+进入Breed后，需要通过`telnet`进行初次固件刷入，并添加环境变量等操作
+
+一系列步骤较多且复杂，可通过以下关键词查找详细教程：
+
+`autoboot.command  boot flash 0x180000`
+
+*乱操作容易真的变成砖了((*
 
 ## 使用建议和参考：
 
