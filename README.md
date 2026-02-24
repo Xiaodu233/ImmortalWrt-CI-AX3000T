@@ -9,6 +9,8 @@
 
 考虑到性能有限，固件内无`tailscale`，`homeproxy`。
 
+~~大概应该~~适配V2版本（暂无设备测试）
+
 ## 固件简要说明：
 
 ~~固件每周五早上6点自动编译~~，保留一个历史版本。
@@ -27,11 +29,11 @@
 
 默认您已经完成前期工作，详细教程请自行查询。
 
-下载Breed：[breed.hackpascal.net](https://breed.hackpascal.net)
+选择[Breed](https://breed.hackpascal.net)下载并刷入。
 
-进入Breed后，需要通过`telnet`进行初次固件刷入，并添加环境变量等操作
+进入Breed，初次刷入固件需要通过`telnet`，并添加环境变量等。
 
-一系列步骤较多且复杂，可通过以下关键词查找详细教程：
+一系列步骤较多且复杂，可通过以下关键词查找完整教程：
 
 `autoboot.command  boot flash 0x180000`
 
