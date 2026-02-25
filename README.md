@@ -1,37 +1,41 @@
 ## ImmortalWrt-CI
-云编译ImmortalWrt固件（小米AX3000T 专用）
 
-此分支使用源码：[https://github.com/VIKINGYFY/immortalwrt/tree/owrt](https://github.com/VIKINGYFY/immortalwrt/tree/owrt)
+云编译ImmortalWrt固件（树莓派4B/Raspberry Pi 4B 专用）
+
+此分支使用源码：
+[VIKINGYFY/immortalwrt-owrt](https://github.com/VIKINGYFY/immortalwrt/tree/owrt)
 
 ## 发布版本说明：
 
-区别仅为有无`homeproxy`，已标注区分，可按需下载。
+区别仅为固件文件系统，已标注`ext4`和`squashfs`，可按需下载。
 
 ## 固件简要说明：
 
-固件每周五早上6点自动编译，保留一个历史版本.
+~~固件每周五早上6点自动编译~~，保留一个历史版本。
 
-固件信息里的时间为编译开始的时间，方便核对上游源码提交时间.
+除主分支外暂无自动编译，~~太懒还没研究出来。~~
 
-固件预置的软件包可在[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/main/Config/General.txt)内查看.
+发布信息里的时间为编译开始的时间，方便核对上游源码提交时间。
 
-固件预置的软件包较少，刷入后可自行安装需要的软件包，或者选择fork项目自行编辑预置软件包.
+固件自带软件包可在
+[General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/pai/Config/General.txt)
+内查看。
 
-未更换镜像源，本人太菜~~还没玩明白~~.
+自带软件包较少，推荐[Fork](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/fork)此项目按需编辑配置，也可在刷入后安装软件包（不推荐）。
+
+未更换镜像源，~~太菜还没折腾明白。~~
 
 ## 安装简要说明：
 
-### 只针对首次刷入（包含官方和其他版本固件）
+**默认您已经完成前期工作，详细教程请自行查询，首次刷入步骤：**
 
-`ubootmod`版本的固件需要先刷入同样版本的Uboot.
+> *都用树莓派了还要教？*
+> 
+> *摸不到设备不清楚~*
+> 
+> *只是帮忙造固件...*
 
-普通固件请刷入[https://github.com/VIKINGYFY/UBOOT-CI/releases](https://github.com/VIKINGYFY/UBOOT-CI/releases)内对应型号的Uboot.
-
-Uboot地址为`192.168.1.1`，分区布局请选择默认.
-
-上传，确认，等待路由器变砖((
-
-Uboot更多操作方法详见[https://cmi.hanwckf.top/p/mt798x-uboot-usage/](https://cmi.hanwckf.top/p/mt798x-uboot-usage/)
+**后续如无特殊需要，可直接在LuCI内更新固件。**
 
 ## 使用建议和参考：
 
