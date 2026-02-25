@@ -23,15 +23,13 @@
 [General.txt](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/blob/main/Config/General.txt)
 内查看。
 
-自带软件包较少，推荐Fork此项目按需编辑配置，也可在刷入后安装软件包（不推荐）。
+自带软件包较少，推荐[Fork](https://github.com/Xiaodu233/ImmortalWrt-CI-AX3000T/fork)此项目按需编辑配置，也可在刷入后安装软件包（不推荐）。
 
 未更换镜像源，~~太菜还没折腾明白。~~
 
 ## 安装简要说明：
 
-默认您已经完成前期工作，详细教程请自行查询。
-
-以下只针对首次刷入：
+**默认您已经完成前期工作，详细教程请自行查询，首次刷入步骤：**
 
 请根据版本（V2带有`AN8855`字段）选择U-Boot，下载并刷入。
 
@@ -42,6 +40,8 @@
 >[VIKINGYFY/UBOOT-CI](https://github.com/VIKINGYFY/UBOOT-CI/releases)（原版功能）
 
 进入U-Boot，分区布局请选择`default`，上传，确认，等待路由器变砖((
+
+**后续如无特殊需要，可直接在LuCI内更新固件。**
 
 ## 使用建议和参考：
 
