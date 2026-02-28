@@ -1,6 +1,6 @@
 #设备平台
 CONFIG_TARGET_mediatek=y
-#CONFIG_TARGET_mediatek_filogic=y
+CONFIG_TARGET_mediatek_filogic=y
 #设备列表
 CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_mi-router-ax3000t=y
 #科学插件
