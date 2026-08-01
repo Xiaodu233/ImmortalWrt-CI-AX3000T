@@ -1,27 +1,32 @@
 #增加插件
 CONFIG_PACKAGE_luci-app-upnp=y
-CONFIG_PACKAGE_luci-app-wolplus=y
 CONFIG_PACKAGE_luci-app-smartdns=y
+CONFIG_PACKAGE_luci-app-wolultra=y
 CONFIG_PACKAGE_luci-app-tailscale=y
 CONFIG_PACKAGE_luci-app-autoreboot=y
-CONFIG_PACKAGE_luci-app-argon-config=y
 #删除插件
 CONFIG_PACKAGE_luci-app-wol=n
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
 #个人需求插件
 CONFIG_PACKAGE_luci-app-ddns=y
 CONFIG_PACKAGE_luci-app-uhttpd=y
+CONFIG_PACKAGE_luci-theme-aurora=y
+CONFIG_PACKAGE_luci-theme-fluent=y
+CONFIG_PACKAGE_luci-app-aurora-config=y
 CONFIG_PACKAGE_ddns-scripts-cloudflare=y
 
 #参数调整
 CONFIG_DEVEL=y
 CONFIG_CCACHE=y
+CONFIG_FEED_video=n
 CONFIG_TARGET_ROOTFS_INITRAMFS=n
 CONFIG_TARGET_PER_DEVICE_ROOTFS=y
 
 #内核调整
 CONFIG_PACKAGE_kmod-dsa=y
+CONFIG_PACKAGE_kmod-tls=y
 CONFIG_PACKAGE_kmod-mtd-rw=y
+CONFIG_PACKAGE_kmod-cryptodev=y
 
 #组件调整
 CONFIG_PACKAGE_ip-full=y
