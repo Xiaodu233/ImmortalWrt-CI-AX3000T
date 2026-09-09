@@ -1,44 +1,24 @@
 #!/bin/bash
 
-has_file() {
-	local path
-	for path in "$@"; do
-		[ -f "$path" ] && return 0
-	done
-	return 1
-}
-
-has_dir() {
-	local path
-	for path in "$@"; do
-		[ -d "$path" ] && return 0
-	done
-	return 1
-}
-
-if [ -n "${GITHUB_WORKSPACE:-}" ] && [ -d "$GITHUB_WORKSPACE/wrt/package" ]; then
-	PKG_PATH="$GITHUB_WORKSPACE/wrt/package"
-else
-	PKG_PATH="$(pwd)"
-fi
+PKG_PATH="$GITHUB_WORKSPACE/wrt/package"
 
 #预置HomeProxy数据
-HP_DIR="$(find "$PKG_PATH" -mindepth 1 -maxdepth 3 -type d -name 'luci-app-homeproxy' -print -quit 2>/dev/null)"
-if has_dir "$HP_DIR"; then
+HP_DIR="$(find "$PKG_PATH" -maxdepth 3 -type d -iname '*homeproxy*' -print -quit 2>/dev/null)"
+if [ -n "$HP_DIR" ]; then
 	echo " "
 
 	HP_RESOURCES="$HP_DIR/root/etc/homeproxy/resources"
 	HP_DASHBOARD="$HP_DIR/root/etc/homeproxy/dashboard"
-	HP_IP_SOURCE="https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/cncidr.txt"
+	HP_GEOIP_SOURCE="https://cdn.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs"
+	HP_GEOIP_VERSION_URL="https://github.com/SagerNet/sing-geoip/releases/latest"
 	HP_GEOSITE_SOURCE="https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set-unstable/geosite-cn.srs"
-	HP_IP_VERSION_URL="https://github.com/Loyalsoldier/surge-rules/releases/latest"
 	HP_GEOSITE_VERSION_URL="https://github.com/SagerNet/sing-geosite/releases/latest"
 	HP_DASHBOARD_SOURCE="https://codeload.github.com/SagerNet/sing-box-dashboard/zip/refs/heads/gh-pages"
 	HP_DASHBOARD_VERSION_URL="https://github.com/SagerNet/sing-box-dashboard/commits/gh-pages.atom"
 	HP_USER_AGENT="HomeProxy resource preset"
 
 	HP_PREREQUISITES_MISSING=0
-	for HP_COMMAND in curl awk; do
+	for HP_COMMAND in curl awk head; do
 		command -v "$HP_COMMAND" > /dev/null 2>&1 || {
 			echo "homeproxy resource preset requires $HP_COMMAND!"
 			HP_PREREQUISITES_MISSING=1
@@ -79,6 +59,25 @@ if has_dir "$HP_DIR"; then
 			--max-time 60 -A "$HP_USER_AGENT" -o "$2" "$1" && [ -s "$2" ]
 	}
 
+	hp_versioned_url() {
+		case "$1" in
+		http://*|https://*) printf '%s?v=%s' "$1" "$2" ;;
+		*) printf '%s' "$1" ;;
+		esac
+	}
+
+	hp_validate_rule_set() {
+		local rule_set="$1" header
+
+		[ -s "$rule_set" ] || return 1
+		header="$(head -c 3 "$rule_set" 2>/dev/null)" || return 1
+		[ "$header" = "SRS" ] || return 1
+		if command -v sing-box > /dev/null 2>&1; then
+			"$HP_SING_BOX" rule-set decompile "$rule_set" \
+				-o "$HP_TMP/$(basename "$rule_set").json" > /dev/null 2>&1 || return 1
+		fi
+	}
+
 	hp_fetch_dashboard_version() {
 		local feed version
 
@@ -103,51 +102,25 @@ if has_dir "$HP_DIR"; then
 	hp_replace_file() {
 		local source_file="$1" target_file="$2" temporary_file
 
-		temporary_file="${target_file}.tmp.$$"
-		cp "$source_file" "$temporary_file" || return 1
-		chmod 0644 "$temporary_file" || return 1
-		mv -f "$temporary_file" "$target_file"
+		temporary_file="${target_file}.new.$$"
+		if ! cp "$source_file" "$temporary_file" || \
+			! chmod 0644 "$temporary_file" || \
+			! mv -f "$temporary_file" "$target_file"; then
+			rm -f "$temporary_file"
+			return 1
+		fi
 	}
 
-	hp_update_ip() {
-		local version file
+	hp_update_rule_set() {
+		local name="$1" source="$2" version_url="$3" version
 
-		version="$(hp_fetch_release_version "$HP_IP_VERSION_URL")" || return 1
-		hp_download "$HP_IP_SOURCE?v=$version" "$HP_TMP/cncidr.txt" || return 1
-		awk -F, -v ipv4="$HP_TMP/china_ip4.txt" -v ipv6="$HP_TMP/china_ip6.txt" '
-			$1 == "IP-CIDR" { print $2 > ipv4 }
-			$1 == "IP-CIDR6" { print $2 > ipv6 }
-		' "$HP_TMP/cncidr.txt" || return 1
-		[ -s "$HP_TMP/china_ip4.txt" ] && [ -s "$HP_TMP/china_ip6.txt" ] || return 1
-		awk '
-			BEGIN {
-				print "{\"version\":5,\"rules\":[{\"ip_cidr\":["
-				first = 1
-			}
-			NF {
-				printf "%s\"%s\"", first ? "" : ",", $0
-				first = 0
-			}
-			END { print "]}]}" }
-		' "$HP_TMP/china_ip4.txt" "$HP_TMP/china_ip6.txt" > "$HP_TMP/geoip_cn.json" || return 1
-		[ -s "$HP_TMP/geoip_cn.json" ] || return 1
-		printf '%s\n' "$version" > "$HP_TMP/china_ip4.ver"
-		printf '%s\n' "$version" > "$HP_TMP/china_ip6.ver"
-		for file in china_ip4.txt china_ip4.ver china_ip6.txt china_ip6.ver geoip_cn.json; do
-			hp_replace_file "$HP_TMP/$file" "$HP_RESOURCES/$file" || return 1
-		done
-		echo "homeproxy resources: china_ip $version"
-	}
-
-	hp_update_geosite() {
-		local version
-
-		version="$(hp_fetch_release_version "$HP_GEOSITE_VERSION_URL")" || return 1
-		hp_download "$HP_GEOSITE_SOURCE?v=$version" "$HP_TMP/geosite_cn.srs" || return 1
-		printf '%s\n' "$version" > "$HP_TMP/geosite_cn.ver"
-		hp_replace_file "$HP_TMP/geosite_cn.srs" "$HP_RESOURCES/geosite_cn.srs" || return 1
-		hp_replace_file "$HP_TMP/geosite_cn.ver" "$HP_RESOURCES/geosite_cn.ver" || return 1
-		echo "homeproxy resources: geosite_cn $version"
+		version="$(hp_fetch_release_version "$version_url")" || return 1
+		hp_download "$(hp_versioned_url "$source" "$version")" "$HP_TMP/$name.srs" || return 1
+		hp_validate_rule_set "$HP_TMP/$name.srs" || return 1
+		printf '%s\n' "$version" > "$HP_TMP/$name.ver" || return 1
+		hp_replace_file "$HP_TMP/$name.srs" "$HP_RESOURCES/$name.srs" || return 1
+		hp_replace_file "$HP_TMP/$name.ver" "$HP_RESOURCES/$name.ver" || return 1
+		echo "homeproxy resources: $name $version"
 	}
 
 	hp_update_dashboard() {
@@ -187,12 +160,12 @@ if has_dir "$HP_DIR"; then
 	fi
 
 	if [ "$HP_PRESET_FAILED" -eq 0 ]; then
-		if ! hp_update_ip; then
-			echo "failed to update homeproxy IP resources; continuing!"
+		if ! hp_update_rule_set geoip_cn "$HP_GEOIP_SOURCE" "$HP_GEOIP_VERSION_URL"; then
+			echo "failed to update homeproxy geoip resource; continuing!"
 			HP_PRESET_FAILED=1
 		fi
 
-		if ! hp_update_geosite; then
+		if ! hp_update_rule_set geosite_cn "$HP_GEOSITE_SOURCE" "$HP_GEOSITE_VERSION_URL"; then
 			echo "failed to update homeproxy geosite; continuing!"
 			HP_PRESET_FAILED=1
 		fi
@@ -209,12 +182,12 @@ if has_dir "$HP_DIR"; then
 	if [ "$HP_PRESET_FAILED" -eq 0 ]; then
 		echo "homeproxy data has been updated!"
 	else
-		echo "homeproxy resource preset completed with errors; continuing other handlers!"
+		echo "homeproxy resource preset completed with errors; continuing!"
 	fi
 fi
 
 #修改argon主题字体和颜色
-if has_dir "$PKG_PATH/luci-theme-argon"; then
+if [ -d "$PKG_PATH/luci-theme-argon" ]; then
 	echo " "
 	if sed -i "s/primary '.*'/primary '#31a1a1'/; s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" \
 		"$PKG_PATH/luci-theme-argon/luci-app-argon-config/root/etc/config/argon"; then
@@ -225,7 +198,7 @@ if has_dir "$PKG_PATH/luci-theme-argon"; then
 fi
 
 #修改aurora菜单式样
-if has_dir "$PKG_PATH/luci-app-aurora-config"; then
+if [ -d "$PKG_PATH/luci-app-aurora-config" ]; then
 	echo " "
 	if find "$PKG_PATH/luci-app-aurora-config/root/usr/share/aurora/" -type f -name '*.template' -exec \
 		sed -i "s/nav_type '.*'/nav_type 'dropdown'/g; s/struct_radius_base '.*'/struct_radius_base '0.125rem'/g" {} +; then
@@ -238,7 +211,7 @@ fi
 #修复TailScale配置文件冲突
 FEEDS_PACKAGES="$PKG_PATH/../feeds/packages"
 TS_FILE="$(find "$FEEDS_PACKAGES" -maxdepth 3 -type f -wholename '*/tailscale/Makefile' -print -quit 2>/dev/null)"
-if has_file "$TS_FILE"; then
+if [ -f "$TS_FILE" ]; then
 	echo " "
 
 	if sed -i '/\/files/d' "$TS_FILE"; then
@@ -250,7 +223,7 @@ fi
 
 #修复Rust编译失败
 RUST_FILE="$(find "$FEEDS_PACKAGES" -maxdepth 3 -type f -wholename '*/rust/Makefile' -print -quit 2>/dev/null)"
-if has_file "$RUST_FILE"; then
+if [ -f "$RUST_FILE" ]; then
 	echo " "
 
 	if sed -i 's/ci-llvm=true/ci-llvm=false/g' "$RUST_FILE"; then
