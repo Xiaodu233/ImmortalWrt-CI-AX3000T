@@ -63,9 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       cache_prefix: ${{steps.initialize-values.outputs.cache_prefix}}
-      legacy_cache_prefix: ${{steps.initialize-values.outputs.legacy_cache_prefix}}
       cache_key: ${{steps.clone-code.outputs.cache_key}}
-      source_hash: ${{steps.clone-code.outputs.source_hash}}
     steps:
       - name: Checkout Projects
         uses: actions/checkout@main
@@ -80,7 +78,7 @@ jobs:
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
-          sudo -E apt -yqq install dos2unix libfuse-dev python3-setuptools libncurses-dev libncurses6
+          sudo -E apt -yqq install dos2unix libfuse-dev python3-setuptools
           sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
@@ -92,33 +90,25 @@ jobs:
       - name: Initialization Values
         id: initialize-values
         run: |
-          echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")" >> $GITHUB_ENV
-          echo "WRT_MARK=${GITHUB_REPOSITORY%%/*}" >> $GITHUB_ENV
-          echo "WRT_INFO=${WRT_SOURCE##*/}" >> $GITHUB_ENV
-          echo "WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/$WRT_CONFIG.txt)" >> $GITHUB_ENV
-          WRT_CACHE_ARCH=$(awk -F= '
-            /^CONFIG_TARGET_[^=]+=y$/ {
-              name=$1
-              sub(/^CONFIG_TARGET_/, "", name)
-              if (name !~ /^DEVICE_/ && name != "ALL_PROFILES") {
-                if (target == "") target=name
-                else if (subtarget == "") subtarget=name
-              }
-            }
-            END {
-              if (target == "" || subtarget == "") exit 1
-              print target "-" subtarget
-            }
-          ' ./Config/$WRT_CONFIG.txt)
+          WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' "./Config/$WRT_CONFIG.txt")
+          WRT_SUBTARGET=$(grep -m 1 -oP "^CONFIG_TARGET_${WRT_TARGET}_\K[\w]+(?=\=y)" "./Config/$WRT_CONFIG.txt")
           WRT_CACHE_SOURCE=${WRT_SOURCE//\//-}
           WRT_CACHE_BRANCH=${WRT_BRANCH//\//-}
-          echo "WRT_CACHE_ARCH=$WRT_CACHE_ARCH" >> $GITHUB_ENV
-          echo "WRT_CACHE_PREFIX=wrt-$WRT_CACHE_SOURCE-$WRT_CACHE_BRANCH-$WRT_CACHE_ARCH" >> $GITHUB_ENV
-          echo "WRT_LEGACY_CACHE_PREFIX=$WRT_CONFIG-$WRT_INFO" >> $GITHUB_ENV
-          echo "cache_prefix=wrt-$WRT_CACHE_SOURCE-$WRT_CACHE_BRANCH-$WRT_CACHE_ARCH" >> "$GITHUB_OUTPUT"
-          echo "legacy_cache_prefix=$WRT_CONFIG-$WRT_INFO" >> "$GITHUB_OUTPUT"
-          echo "WRT_KVER=none" >> $GITHUB_ENV
-          echo "WRT_LIST=none" >> $GITHUB_ENV
+          WRT_CACHE_TARGET="$WRT_TARGET-$WRT_SUBTARGET"
+          WRT_CACHE_PREFIX="wrt-$WRT_CACHE_SOURCE-$WRT_CACHE_BRANCH-$WRT_CACHE_TARGET"
+
+          {
+            echo "WRT_INFO=${WRT_SOURCE##*/}"
+            echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")"
+            echo "WRT_MARK=${GITHUB_REPOSITORY%%/*}"
+            echo "WRT_TARGET=$WRT_TARGET"
+            echo "WRT_SUBTARGET=$WRT_SUBTARGET"
+            echo "WRT_CACHE_TARGET=$WRT_CACHE_TARGET"
+            echo "WRT_CACHE_PREFIX=$WRT_CACHE_PREFIX"
+            echo "WRT_KVER=none"
+            echo "WRT_LIST=none"
+          } >> "$GITHUB_ENV"
+          echo "cache_prefix=$WRT_CACHE_PREFIX" >> "$GITHUB_OUTPUT"
 
       - name: Clone Code
         id: clone-code
@@ -130,7 +120,6 @@ jobs:
           echo "WRT_HASH=$WRT_HASH" >> $GITHUB_ENV
           echo "WRT_CACHE_KEY=$WRT_CACHE_PREFIX-$WRT_HASH" >> $GITHUB_ENV
           echo "cache_key=$WRT_CACHE_PREFIX-$WRT_HASH" >> "$GITHUB_OUTPUT"
-          echo "source_hash=$WRT_HASH" >> "$GITHUB_OUTPUT"
 
           # GitHub Action 移除国内下载源
           PROJECT_MIRRORS_FILE="./scripts/projectsmirrors.json"
@@ -148,9 +137,7 @@ jobs:
         uses: actions/cache/restore@main
         with:
           key: ${{env.WRT_CACHE_KEY}}
-          restore-keys: |
-            ${{env.WRT_CACHE_PREFIX}}-
-            ${{env.WRT_LEGACY_CACHE_PREFIX}}-
+          restore-keys: ${{env.WRT_CACHE_PREFIX}}-
           path: |
             ./wrt/.ccache
             ./wrt/staging_dir/host*
@@ -208,20 +195,8 @@ jobs:
 
           make -j$(nproc) || make -j1 V=s
 
-      - name: Check Cache Source
-        id: cache-source
-        if: ${{ !inputs.WRT_TEST && success() }}
-        run: |
-          REMOTE_HASH=$(git ls-remote "$WRT_REPO" "refs/heads/$WRT_BRANCH" | awk 'NR == 1 {print $1}')
-          if [ -n "$REMOTE_HASH" ] && [ "$REMOTE_HASH" = "$WRT_HASH" ]; then
-            echo "current=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "current=false" >> "$GITHUB_OUTPUT"
-            echo "skip cache save: source branch is now ${REMOTE_HASH:-unknown}, built $WRT_HASH"
-          fi
-
       - name: Save Build Cache
-        if: ${{ !inputs.WRT_TEST && success() && steps.cache-source.outputs.current == 'true' }}
+        if: ${{ !inputs.WRT_TEST && success() && steps.cache-restore.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@main
         with:
           key: ${{env.WRT_CACHE_KEY}}
@@ -291,58 +266,36 @@ jobs:
     if: ${{ !inputs.WRT_TEST && needs.core.result == 'success' }}
     runs-on: ubuntu-latest
     concurrency:
-      group: wrt-cache-rollover-${{inputs.WRT_SOURCE}}-${{inputs.WRT_BRANCH}}
+      group: wrt-cache-rollover-${{github.ref}}-${{needs.core.outputs.cache_prefix}}
       cancel-in-progress: false
     env:
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       GH_REPO: ${{github.repository}}
-      WRT_REPO: ${{inputs.WRT_REPO}}
-      WRT_BRANCH: ${{inputs.WRT_BRANCH}}
       WRT_CACHE_PREFIX: ${{needs.core.outputs.cache_prefix}}
-      WRT_LEGACY_CACHE_PREFIX: ${{needs.core.outputs.legacy_cache_prefix}}
       WRT_CACHE_KEY: ${{needs.core.outputs.cache_key}}
-      WRT_SOURCE_HASH: ${{needs.core.outputs.source_hash}}
     steps:
       - name: Roll Build Cache
         run: |
           set -euo pipefail
 
-          delete_cache_key() {
-            local exact_key="$1"
-            gh cache list --repo "$GH_REPO" --key "$exact_key" --ref "$GITHUB_REF" --limit 100 --json id,key --jq '.[] | [.id, .key] | @tsv' |
-              while IFS=$'\t' read -r CACHE_ID CACHE_KEY; do
-                [ "$CACHE_KEY" = "$exact_key" ] || continue
-                gh cache delete "$CACHE_ID" --repo "$GH_REPO" ||
-                  echo "warning: failed to delete cache $CACHE_ID ($CACHE_KEY)"
-              done
-          }
-
-          REMOTE_HASH=$(git ls-remote "$WRT_REPO" "refs/heads/$WRT_BRANCH" | awk 'NR == 1 {print $1}')
-          if [ -z "$REMOTE_HASH" ] || [ "$REMOTE_HASH" != "$WRT_SOURCE_HASH" ]; then
-            echo "remove stale cache generation: source branch is now ${REMOTE_HASH:-unknown}, built $WRT_SOURCE_HASH"
-            delete_cache_key "$WRT_CACHE_KEY"
-            exit 0
-          fi
-
+          CURRENT_CACHE_KEYS=$(gh cache list --repo "$GH_REPO" --key "$WRT_CACHE_KEY" --ref "$GITHUB_REF" --limit 100 --json key --jq '.[].key')
           CURRENT_CACHE_FOUND=0
           while IFS= read -r CACHE_KEY; do
             if [ "$CACHE_KEY" = "$WRT_CACHE_KEY" ]; then
               CURRENT_CACHE_FOUND=1
               break
             fi
-          done < <(gh cache list --repo "$GH_REPO" --key "$WRT_CACHE_KEY" --ref "$GITHUB_REF" --limit 100 --json key --jq '.[].key')
+          done <<< "$CURRENT_CACHE_KEYS"
 
           if [ "$CURRENT_CACHE_FOUND" -ne 1 ]; then
             echo "skip cache rollover: current cache is not available yet"
             exit 0
           fi
 
-          for CACHE_PREFIX in "$WRT_CACHE_PREFIX-" "$WRT_LEGACY_CACHE_PREFIX-"; do
-            gh cache list --repo "$GH_REPO" --key "$CACHE_PREFIX" --ref "$GITHUB_REF" --limit 100 --json id,key --jq '.[] | [.id, .key] | @tsv' |
-              while IFS=$'\t' read -r CACHE_ID CACHE_KEY; do
-                [ -n "$CACHE_ID" ] || continue
-                [ "$CACHE_KEY" = "$WRT_CACHE_KEY" ] && continue
-                gh cache delete "$CACHE_ID" --repo "$GH_REPO" ||
-                  echo "warning: failed to delete cache $CACHE_ID ($CACHE_KEY)"
-              done
-          done
+          gh cache list --repo "$GH_REPO" --key "$WRT_CACHE_PREFIX-" --ref "$GITHUB_REF" --limit 100 --json id,key --jq '.[] | [.id, .key] | @tsv' |
+            while IFS=$'\t' read -r CACHE_ID CACHE_KEY; do
+              [ -n "$CACHE_ID" ] || continue
+              [ "$CACHE_KEY" = "$WRT_CACHE_KEY" ] && continue
+              gh cache delete "$CACHE_ID" --repo "$GH_REPO" ||
+                echo "warning: failed to delete cache $CACHE_ID ($CACHE_KEY)"
+            done
