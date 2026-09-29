@@ -50,7 +50,7 @@ UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "master"
 UPDATE_PACKAGE "aurora" "eamonxg/luci-theme-aurora" "master"
 UPDATE_PACKAGE "aurora-config" "eamonxg/luci-app-aurora-config" "master"
 # UPDATE_PACKAGE "shadcn" "eamonxg/luci-theme-shadcn" "main"
-# UPDATE_PACKAGE "noobwrt" "nooblk-98/luci-theme-noobwrt" "master"
+# UPDATE_PACKAGE "footstrap" "VizzleTF/luci-theme-footstrap" "main"
 # UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "master"
 # UPDATE_PACKAGE "kucat-config" "sirpdboy/luci-app-kucat-config" "master"
 
