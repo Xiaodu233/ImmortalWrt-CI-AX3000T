@@ -90,8 +90,8 @@ jobs:
       - name: Initialization Values
         id: initialize-values
         run: |
-          WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' "./Config/$WRT_CONFIG.txt")
-          WRT_SUBTARGET=$(grep -m 1 -oP "^CONFIG_TARGET_${WRT_TARGET}_\K[\w]+(?=\=y)" "./Config/$WRT_CONFIG.txt")
+          WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[^=_]+(?=\=y)' "./Config/$WRT_CONFIG.txt")
+          WRT_SUBTARGET=$(grep -m 1 -oP "^CONFIG_TARGET_${WRT_TARGET}_\K[^=_]+(?=\=y)" "./Config/$WRT_CONFIG.txt")
           WRT_CACHE_SOURCE=${WRT_SOURCE//\//-}
           WRT_CACHE_BRANCH=${WRT_BRANCH//\//-}
           WRT_CACHE_TARGET="$WRT_TARGET-$WRT_SUBTARGET"
@@ -99,8 +99,8 @@ jobs:
 
           {
             echo "WRT_INFO=${WRT_SOURCE##*/}"
-            echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")"
             echo "WRT_MARK=${GITHUB_REPOSITORY%%/*}"
+            echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")"
             echo "WRT_TARGET=$WRT_TARGET"
             echo "WRT_SUBTARGET=$WRT_SUBTARGET"
             echo "WRT_CACHE_TARGET=$WRT_CACHE_TARGET"
