@@ -64,12 +64,12 @@ UPDATE_PACKAGE "aurora-config" "eamonxg/luci-app-aurora-config" "master"
 # UPDATE_PACKAGE "stuntman" "muink/openwrt-stuntman" "master"
 # UPDATE_PACKAGE "luci-app-natmapt" "muink/luci-app-natmapt" "master"
 
-# UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
+# UPDATE_PACKAGE "vnt2" "whzhni1/luci-app-vnt2" "main"
 # UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
 # UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 # UPDATE_PACKAGE "tailscale-community" "Tokisaki-Galaxy/luci-app-tailscale-community" "master"
 
-UPDATE_PACKAGE "viking" "VIKINGYFY/packages" "main" "" "sing-box luci-app-homeproxy luci-app-timewol luci-app-wolplus luci-app-wolultra"
+UPDATE_PACKAGE "viking" "VIKINGYFY/packages" "main" "" "miniupnpd sing-box luci-app-homeproxy luci-app-upnp luci-app-timewol luci-app-wolplus luci-app-wolultra"
 
 
 #更新软件包版本
